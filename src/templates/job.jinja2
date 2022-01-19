@@ -1,0 +1,14 @@
+{% extends 'base.jinja2' %}
+
+{% block body %}
+<h1>Job Insights</h1>
+{% for key, value in job.items() %}
+{% if key != "url" -%}
+<h4>{{ key | capitalize }}</h4>
+<p>{{ value }}</p>
+<hr>
+{% endif -%}
+{% endfor %}
+<button class="btn my-3 btn-warning" onclick="goBack()">Go Back</button>
+<script>goBack = () => window.history.back();</script>
+{% endblock body %}

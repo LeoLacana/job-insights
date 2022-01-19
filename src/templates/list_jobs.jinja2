@@ -1,0 +1,116 @@
+{% extends 'base.jinja2' %}
+
+{% block body %}
+<h1>Jobs</h1>
+
+<form class="is-valid" action="{{ url_for('client.list_jobs') }}">
+    <div class="row">
+        <!-- #region job_types -->
+        {% if ctx["job_types"] %}
+        <div class="mb-2 col-md-3 col-lg-2">
+            <label class="form-label">Job Type</label>
+            <select class="form-select" name="job_type" id="job_type">
+                <option value="">All</option>
+                {% for job_type in ctx["job_types"] %}
+                {% if ctx["previous_job_type"] == job_type %}
+                <option value="{{ job_type }}" selected> {{ job_type |
+                    capitalize }}
+                    {% else %}
+                <option value="{{ job_type }}"> {{ job_type | capitalize }}
+                    {% endif %}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+        <!-- #endregion -->
+
+        <!-- #region industries -->
+        {% if ctx["industries"] %}
+        <div class="mb-2 col-md-5 col-lg-3">
+            <label class="form-label">Industry</label>
+            <select class="form-select" name="industry" id="industry">
+                <option value="">All</option>
+                {% for industry in ctx["industries"] %}
+                {% if ctx["previous_industry"] == industry %}
+                <option value="{{ industry }}" selected> {{ industry }}
+                    {% else %}
+                <option value="{{ industry }}"> {{ industry }}
+                    {% endif %}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+        <!-- #endregion -->
+
+        <!-- #region salary -->
+        <div class="mb-2 col-md-4 col-lg-3">
+            <label class="form-label">Anual salary</label>
+            <input class="form-control" type="number" name="salary"
+                value="{{ctx['previous_salary']}}" min="{{ctx['min_salary']}}"
+                max="{{ctx['max_salary']}}">
+        </div>
+        <!-- #endregion -->
+
+        <!-- #region first_job -->
+        <div class="mb-2 col-md-6 col-lg-2">
+            <label class="form-label">First result</label>
+            <input class="form-control" type="number" name="first_job"
+                value="{{ctx['previous_first']}}">
+        </div>
+        <!-- #endregion -->
+
+        <!-- #region amount -->
+        <div class="mb-2 col-md-6 col-lg-2">
+            <label class="form-label">Amount</label>
+            <input class="form-control" type="number" name="amount"
+                value="{{ctx['previous_amount']}}">
+        </div>
+        <!-- #endregion -->
+
+    </div>
+    <div class="my-2 col-auto">
+        <input type="submit" class="btn btn-primary" value="Filter results">
+    </div>
+</form>
+
+{% if ctx["jobs"] %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Company</th>
+            <th scope="col">Industry</th>
+            <th scope="col">Type</th>
+            <th scope="col">Min Salary</th>
+            <th scope="col">Max Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for job in ctx["jobs"] %}
+        <tr>
+            <td scope="row">
+                {% if job["url"] %}
+                <a href="{{ job['url'] }}">
+                    {{ job["id"] }}
+                </a>
+                {% else %}
+                {{ job["id"] }}
+                {% endif %}
+            </td>
+            <td scope="row">{{ job["job_title"] }}</td>
+            <td scope="row">{{ job["company"] }}</td>
+            <td scope="row">{{ job["industry"] }}</td>
+            <td scope="row">{{ job["job_type"] }}</td>
+            <td scope="row">{{ job["min_salary"] }}</td>
+            <td scope="row">{{ job["max_salary"] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h3>No jobs available!</h3>
+{% endif %}
+{% endblock body %}

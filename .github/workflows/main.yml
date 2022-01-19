@@ -1,0 +1,83 @@
+on:
+  workflow_dispatch:
+    inputs:
+      dispatch_token:
+        description: "Token that authorize the dispatch"
+        required: true
+      head_sha:
+        description: "Head commit SHA that dispatched the workflow"
+        required: true
+      pr_author_username:
+        description: "Pull Request author username"
+        required: true
+      pr_number:
+        description: "Pull Request number that dispatched the workflow"
+        required: true
+
+jobs:
+  evaluator:
+    runs-on: self-hosted
+    steps:
+      - name: Fetch project repository
+        uses: actions/checkout@v2
+
+      - name: Fetch Blocked Files Checkout action
+        uses: actions/checkout@v2
+        with:
+          repository: betrybe/blocked-files-checkout-action
+          ref: v2
+          token: ${{ secrets.GIT_HUB_PAT }}
+          path: .github/actions/blocked-files-checkout
+
+      - name: Fetch Flake8 linter
+        uses: actions/checkout@v2
+        with:
+          repository: betrybe/flake8-linter-action
+          ref: v1.3
+          token: ${{ secrets.GIT_HUB_PAT }}
+          path: .github/actions/flake8-linter
+
+      - name: Fetch PyTest evaluator
+        uses: actions/checkout@v2
+        with:
+          repository: betrybe/pytest-evaluator-action
+          ref: v4
+          token: ${{ secrets.GIT_HUB_PAT }}
+          path: .github/actions/pytest-evaluator
+
+      - name: Fetch Store evaluation
+        uses: actions/checkout@v2
+        with:
+          repository: betrybe/store-evaluation-action
+          ref: v4
+          token: ${{ secrets.GIT_HUB_PAT }}
+          path: .github/actions/store-evaluation
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1.4.4
+        with:
+          node-version: "12"
+
+      - name: Restore protected files
+        uses: ./.github/actions/blocked-files-checkout
+        with:
+          restore_branch: "main"
+
+      - name: Run Flake8 linter
+        uses: ./.github/actions/flake8-linter
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pr_number: ${{ github.event.inputs.pr_number }}
+
+      - name: Run PyTest evaluation
+        id: evaluator
+        uses: ./.github/actions/pytest-evaluator
+        with:
+          pr_author_username: ${{ github.event.inputs.pr_author_username }}
+
+      - name: Run Store evaluation
+        uses: ./.github/actions/store-evaluation
+        with:
+          evaluation-data: ${{ steps.evaluator.outputs.result }}
+          environment: staging
+          pr-number: ${{ github.event.inputs.pr_number }}

@@ -1,0 +1,89 @@
+{
+  "requirements": [
+    {
+      "identifier": "test_read_jobs",
+      "description": "1 - Implemente a função read",
+      "bonus": false
+    },
+    {
+      "identifier": "test_get_unique_job_types",
+      "description": "2 - Implemente a função get_unique_job_types",
+      "bonus": false
+    },
+    {
+      "identifier": "test_get_unique_industries",
+      "description": "3 - Implemente a função get_unique_industries",
+      "bonus": false
+    },
+    {
+      "identifier": "test_get_max_salary",
+      "description": "4 - Implemente a função get_max_salary",
+      "bonus": false
+    },
+    {
+      "identifier": "test_get_min_salary",
+      "description": "5 - Implemente a função get_min_salary",
+      "bonus": false
+    },
+    {
+      "identifier": "test_filter_by_job_type",
+      "description": "6 - Implemente a função filter_by_job_type",
+      "bonus": false
+    },
+    {
+      "identifier": "test_filter_by_industries",
+      "description": "7 - Implemente a função filter_by_industry",
+      "bonus": false
+    },
+    {
+      "identifier": "test_matches_salary_range",
+      "description": "8 - Implemente a função matches_salary_range",
+      "bonus": false
+    },
+    {
+      "identifier": "test_filter_by_salary_range",
+      "description": "9 - Implemente a função filter_by_salary_range",
+      "bonus": false
+    },
+    {
+      "identifier": "test_sort_by_criteria[sort_by_strings]",
+      "description": "10.2 - Implemente um teste para a função sort_by",
+      "bonus": false
+    },
+    {
+      "identifier": "test_sort_by_criteria[sort_by_any_criteria]",
+      "description": "10.1 - Implemente um teste para a função sort_by",
+      "bonus": false
+    },
+    {
+      "identifier": "test_sort_by_criteria[sort_by_descending]",
+      "description": "10.3 - Implemente um teste para a função sort_by",
+      "bonus": false
+    },
+    {
+      "identifier": "test_sort_by_criteria[sort_by]",
+      "description": "10.4 - Implemente um teste para a função sort_by",
+      "bonus": false
+    },
+    {
+      "identifier": "test_job_route_exists",
+      "description": "11.1 - Crie a rota /job recebendo o parâmetro index",
+      "bonus": true
+    },
+    {
+      "identifier": "test_job_view_exists",
+      "description": "11.2 - Crie a view job, recebendo o parâmetro index",
+      "bonus": true
+    },
+    {
+      "identifier": "test_job_view_status_200",
+      "description": "11.3 - Implemente view job para que ela retorne status code 200 para jobs válidos",
+      "bonus": true
+    },
+    {
+      "identifier": "test_job_view_has_job_information",
+      "description": "11.4 - Implemente view job de forma a retornar o HTML exato de uma página de job",
+      "bonus": true
+    }
+  ]
+}
