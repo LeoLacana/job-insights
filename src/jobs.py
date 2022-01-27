@@ -1,9 +1,10 @@
 from functools import lru_cache
+from csv import DictReader
 
 
 @lru_cache
 def read(path):
-    print('Iniciando')
+    job = []
     """Reads a file from a given path and returns its contents
 
     Parameters
@@ -16,4 +17,10 @@ def read(path):
     list
         List of rows as dicts
     """
-    return []
+    with open(path) as file:
+        the_file = DictReader(file, delimiter=",", quotechar='"')
+
+        for file in the_file:
+            job.append(file)
+
+    return job
