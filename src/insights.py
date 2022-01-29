@@ -126,7 +126,18 @@ def get_min_salary(path):
     int
         The minimum salary paid out of all job opportunities
     """
-    pass
+
+    files_read = read(path)
+
+    response = 0
+
+    for file in files_read:
+        if file['min_salary'] == '' or not file['min_salary'].isnumeric():
+            pass
+        elif response == 0 or int(file['min_salary']) < response:
+            response = int(file['min_salary'])
+
+    return response
 
 
 def matches_salary_range(job, salary):
