@@ -56,7 +56,13 @@ def get_unique_industries(path):
     list
         List of unique industries
     """
-    return []
+    files_read = read(path)
+
+    response = {
+        file['industry'] for file in files_read if not file['industry'] == ""
+    }
+
+    return list(response)
 
 
 def filter_by_industry(jobs, industry):
