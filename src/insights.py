@@ -18,7 +18,7 @@ def get_unique_job_types(path):
     """
     files_read = read(path)
 
-    response = {file['job_type'] for file in files_read}
+    response = {file["job_type"] for file in files_read}
 
     return list(response)
 
@@ -41,7 +41,7 @@ def filter_by_job_type(jobs, job_type):
     response = []
 
     for job in jobs:
-        if job['job_type'] == job_type:
+        if job["job_type"] == job_type:
             response.append(job)
     return response
 
@@ -64,7 +64,7 @@ def get_unique_industries(path):
     files_read = read(path)
 
     response = {
-        file['industry'] for file in files_read if not file['industry'] == ""
+        file["industry"] for file in files_read if not file["industry"] == ""
     }
 
     return list(response)
@@ -88,7 +88,7 @@ def filter_by_industry(jobs, industry):
     response = []
 
     for job in jobs:
-        if job['industry'] == industry:
+        if job["industry"] == industry:
             response.append(job)
     return response
 
@@ -113,10 +113,10 @@ def get_max_salary(path):
     response = 0
 
     for file in files_read:
-        if file['max_salary'] == '' or not file['max_salary'].isnumeric():
+        if file["max_salary"] == "" or not file["max_salary"].isnumeric():
             pass
-        elif int(file['max_salary']) > response:
-            response = int(file['max_salary'])
+        elif int(file["max_salary"]) > response:
+            response = int(file["max_salary"])
 
     return response
 
@@ -142,10 +142,10 @@ def get_min_salary(path):
     response = 0
 
     for file in files_read:
-        if file['min_salary'] == '' or not file['min_salary'].isnumeric():
+        if file["min_salary"] == "" or not file["min_salary"].isnumeric():
             pass
-        elif response == 0 or int(file['min_salary']) < response:
-            response = int(file['min_salary'])
+        elif response == 0 or int(file["min_salary"]) < response:
+            response = int(file["min_salary"])
 
     return response
 
@@ -173,7 +173,15 @@ def matches_salary_range(job, salary):
         If `job["min_salary"]` is greather than `job["max_salary"]`
         If `salary` isn't a valid integer
     """
-    pass
+
+    for value in job:
+        if "min_salary" and "max_salary" not in job or type(job[value]) != int:
+            raise ValueError()
+
+    if job["min_salary"] > job["max_salary"] or not (isinstance(salary, int)):
+        raise ValueError()
+
+    return salary >= job["min_salary"] and salary <= job["max_salary"]
 
 
 def filter_by_salary_range(jobs, salary):
@@ -191,4 +199,11 @@ def filter_by_salary_range(jobs, salary):
     list
         Jobs whose salary range contains `salary`
     """
-    return []
+    job_salary = []
+    for job in jobs:
+        try:
+            if matches_salary_range(job, salary):
+                job_salary.append(job)
+        except ValueError:
+            print("Error")
+    return job_salary
