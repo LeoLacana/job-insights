@@ -205,5 +205,5 @@ def filter_by_salary_range(jobs, salary):
             if matches_salary_range(job, salary):
                 job_salary.append(job)
         except ValueError:
-            print("Error")
+            print()
     return job_salary
