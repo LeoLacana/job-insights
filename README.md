@@ -13,5 +13,3 @@ Os dados foram extraídos do site [Glassdoor](https://www.glassdoor.com.br/) e o
 - Utilizar tratamento de exceções.
 - Realizar a manipulação de arquivos.
 - Escrever funções.
-- Escrever testes com Pytest.
-- Escrever seus próprios módulos e importá-los em outros códigos.
